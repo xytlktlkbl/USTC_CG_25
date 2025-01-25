@@ -16,7 +16,7 @@
 CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平台的安装（编译过程），开发者通过编写一种与平台无关的 CMakeList.txt 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件。CMake能够有效地描述这些文件之间的依赖关系以及处理命令，当个别文件改动后仅执行必要的处理，而不必重复整个编译过程，可以大大提高软件开发的效率。
 
 - CMake：[官网](https://cmake.org/)，[官方教程](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)，[官方文档](https://cmake.org/documentation/) 
-- 可详细阅读 [官方教程](https://cmake.org/cmake/help/latest/guide/tutorial/index.html) 和 [0. C++ 热身训练](0_CppPratices/)，模仿使用
+- 可详细阅读 [官方教程](https://cmake.org/cmake/help/latest/guide/tutorial/index.html) 和 [0. C++ 热身训练](../Homeworks/0_cpp_warmup/)，模仿使用
 - CMake 内容比较杂，一下子掌握所有内容不太现实，在日后的使用过程中结合搜索和[官方文档](https://cmake.org/documentation/)来解决实际问题
 
 
