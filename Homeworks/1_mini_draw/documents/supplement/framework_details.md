@@ -62,7 +62,7 @@ int main()
 
 这个窗口默认绘制了一个 ImGui 的 DemoWindow，其中包含了 ImGui 的帮助文档和可以实现的各种功能和效果，其代码实现可以查阅 `ImGui::ShowDemoWindow()` 函数，可供模仿学习。
 
-<div align=center><img width = 75% src ="figs/demo_hw.png"/></div align>
+<div align=center><img width = 75% src ="../figs/demo_hw.png"/></div align>
 
 ### Step 2: 定制化窗口，在窗口中添加按钮等功能
 
@@ -111,7 +111,7 @@ void MiniDraw::draw()
 
 使用这个 `Window` 类的子类，我们一样可以在 `main()` 函数中新建一个窗口，不过这个窗口不会调用原来的默认绘制函数，而是调用它自己的绘制函数。
 
-<div align=center><img width = 75% src ="figs/t_0.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_0.png"/></div align>
 
 可以设置该窗口的若干显示属性，例如 `ImGuiWindowFlags_NoDecoration` 可以去掉上方的标签栏：
 
@@ -126,7 +126,7 @@ void MiniDraw::draw()
 }
 ```
 
-<div align=center><img width = 75% src ="figs/t_1.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_1.png"/></div align>
 
 通过调用 `ImGui::SetNextWindowPos()` 函数与 `ImGui::SetNextWindowSize()`函数，可以设置窗口的（左上角）位置以及大小。这里获取视窗大小，并且用它来设置窗口的属性，将窗口铺满整个屏幕：
 ```cpp
@@ -143,7 +143,7 @@ void MiniDraw::draw()
     ImGui::End();
 }
 ```
-<div align=center><img width = 75% src ="figs/t_2.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_2.png"/></div align>
 
 最后，使用 `ImGui::Button()` 可以添加按钮，例如这里添加了名称为 `"Line"` 和 `"Rect"` 的两个按钮，在单击后输出相应的字符串：
 
@@ -172,7 +172,7 @@ void MiniDraw::draw()
 
 ```
 
-<div align=center><img width = 75% src ="figs/t_3.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_3.png"/></div align>
 
 ### Step 3: 利用 ImGui 的函数进行图形绘制
 
@@ -203,7 +203,7 @@ void MiniDraw::draw()
     ImGui::End();
 }
 ```
-<div align=center><img width = 75% src ="figs/t_4.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_4.png"/></div align>
 
 ### Step 4: 鼠标交互
 
@@ -297,7 +297,7 @@ void MiniDraw::draw()
 }
 ```
 
-<div align=center><img width = 75% src ="figs/t_5.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_5.png"/></div align>
 
 至此 MiniDraw 有了鼠标绘制功能，但是只能画一条线，因为没有**存储数据**。
 
@@ -386,7 +386,7 @@ if (draw_status_)
     draw_list->AddLine(start_point_, end_point_, IM_COL32(255, 0, 0, 255), 2.0f);
 ```
 
-<div align=center><img width = 75% src ="figs/t_6.png"/></div align>
+<div align=center><img width = 75% src ="../figs/t_6.png"/></div align>
 
 这样就可以绘制多条线段了。
 
