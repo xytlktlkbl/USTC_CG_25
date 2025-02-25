@@ -12,7 +12,7 @@ namespace USTC_CG
 void Canvas::draw()
 {
     draw_background();
-
+    // HW1_TODO: more interaction events
     if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
         mouse_click_event();
     mouse_move_event();
