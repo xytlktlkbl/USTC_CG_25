@@ -39,5 +39,6 @@ class Shape
      * @param x, y Dragging point. e.g. end point of a line.
      */
     virtual void update(float x, float y) = 0;
+    void add_control_point(float x, float y) {}
 };
 }  // namespace USTC_CG

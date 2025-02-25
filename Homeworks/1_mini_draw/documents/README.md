@@ -137,15 +137,34 @@ if (!draw_status_) // 点击鼠标开启绘制状态
 
 > **思考：多边形的数据应该如何存储？**
 
-对于多边形，实现 `update(float x, float y)` 函数可以用于为其添加顶点，绘制函数 `draw()` 可以将其**分解为多段直线绘制**。
+对于多边形，重载 `add_control_point(float x, float y)` 函数可以用于为其添加顶点，实现 `update(float x, float y)`以传递鼠标移动时的更新，绘制函数 `draw()` 可以将其**分解为多段直线绘制**。
 
 > **在 ImGui 中也提供了多边形的绘制函数，但是它做不到在绘制的过程中保持开放，绘制结束时连接首位两点的效果**
 
 ### Step 3: 在 `comp_canvas.cpp` 中实现鼠标绘制多边形
 
-可以按照这样的逻辑：鼠标左键单击时，创建一个多边形对象，后续鼠标左键单击的时候为多边形添加顶点，直到鼠标右键单击结束多边形的创建。
+可以按照这样的逻辑：**鼠标左键单击时**，创建一个多边形对象，**后续鼠标左键单击的时候**为多边形添加顶点，直到**鼠标右键单击**结束多边形的创建。
 
-相应地要修改 `mouse_click_event()`, `mouse_move_event()`, `mouse_release_event()` 中的中多边形相关的逻辑。
+相应地要修改 `mouse_click_event()`, `mouse_move_event()`, `mouse_release_event()` 中的中多边形相关的逻辑，此外，你可以模仿上述函数，在 Canvas 鼠标右键的逻辑 `mouse_right_click_event()`，例如：
+
+```cpp
+void Canvas::draw()
+{
+    draw_background();
+
+    if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+        mouse_click_event();
+    if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+        mouse_right_click_event(); // 这个函数需要自己添加和实现
+    mouse_move_event();
+    if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
+        mouse_release_event();
+
+    draw_shapes();
+}
+```
+参考示例：
+<div align=center><img width = 75% src ="./figs/polygon.gif"/></div align>
 
 > **Freehand 图形的绘制事实上和多边形较为类似，实现思路是一致的。**
 
