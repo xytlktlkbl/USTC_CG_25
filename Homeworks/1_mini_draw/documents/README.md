@@ -74,7 +74,7 @@ void set_rect();
 椭圆类的实现请参考同文件夹下[直线类](../../../Framework2D/src/assignments/1_MiniDraw/shapes/line.h) `Line`、[矩形类](../../../Framework2D/src/assignments/1_MiniDraw/shapes/rect.h) `Rect` ，你需要为椭圆定义一个数据存储的结构 `Class Ellipse`，一个构造方法，并实现一个椭圆的绘制函数 `draw()`，这里 ImGui 为我们提供了一个现有的方法用以绘制椭圆：
 
 ```cpp
-void AddEllipse(const ImVec2& center, float radius_x, float radius_y, ImU32 col, float rot = 0.0f, int num_segments = 0, float thickness = 1.0f);
+void AddEllipse(const ImVec2& center, const ImVec2& radius, ImU32 col, float rot, int num_segments, float thickness);
 ```
 
 为了实现椭圆形状的动态更新，可以仿照 `Line` 和 `Rect` 类写一个 `update(float x, float y)` 函数，它用传入的二维鼠标位置更新椭圆内存储的数据。
