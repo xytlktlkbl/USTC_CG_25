@@ -63,6 +63,8 @@ void set_rect();
 并在 [canvas_widget.cpp](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.cpp) 中实现它，可以参考`set_line()`、`set_rect()`的实现。
 这样就可以正确切换图形类型了。
 
+<div align=center><img width = 75% src ="./figs/step1.jpg"/></div align>
+
 不过这个时候我们还没有实现椭圆对应的数据结构和绘制方法，因此画不出椭圆。
 
 ### Step 2: 实现 ``Ellipse`` 图形类
@@ -120,6 +122,8 @@ if (!draw_status_) // 点击鼠标开启绘制状态
 - 函数 `mouse_click_event()` 在绘画状态中单击时退出绘画状态，并存储当前图形。
 
 至此，椭圆的绘制程序就完成了。
+
+<div align=center><img width = 75% src ="./figs/step2.jpg"/></div align>
 
 > **思考：`Class Ellipse` 是如何体现类的多态的。**
 
