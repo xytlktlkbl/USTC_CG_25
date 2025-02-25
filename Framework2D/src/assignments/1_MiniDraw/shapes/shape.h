@@ -39,6 +39,13 @@ class Shape
      * @param x, y Dragging point. e.g. end point of a line.
      */
     virtual void update(float x, float y) = 0;
+    /**
+     * Adds a control point to the shape.
+     * This function is used to add control points to the shape, which can be
+     * used to modify the shape's appearance.
+     *
+     * @param x, y Control point to be added. e.g. vertex of a polygon.
+     */
     void add_control_point(float x, float y) {}
 };
 }  // namespace USTC_CG

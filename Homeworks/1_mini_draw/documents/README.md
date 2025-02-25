@@ -5,7 +5,7 @@
 - 大致阅读 [GUI 简介](./supplement/gui_introduction.md)，不完全懂也没关系，不用担心！
 - 根据 [配置说明](../../../Framework2D/README.md) 配置作业项目代码，把 Demo 程序跑通。
 - 简单了解 [绘图基本功能的实现](./supplement/framework_details.md) ，一步一步完成画**直线**和**矩形**的 MiniDraw 程序，学习如何添加按钮、处理鼠标交互等。**（这一步的结果已经在框架中给出，目的主要是帮助了解框架的使用，你也可以运行 `1_MiniDraw.exe` 尝试，直接进入下一步完成 MiniDraw 功能的扩充。）**
-- 模仿上述过程，添加更多图形的绘制，如 `Ellipse`，`Polygon`，`Freehand`（自由绘制模式，optional）等。我们在程序中提供了若干处 `HW1_TODO` 的提示，根据下面的提示补充相应的功能，就可以完成这次作业。
+- 模仿上述过程，添加更多图形的绘制，如 `Ellipse`，`Polygon`，`Freehand`（自由绘制模式，optional）等。我们在程序中提供了若干处 `HW1_TODO` 的提示，根据本文档接下来的教程补充相应的功能，就可以完成这次作业。
 
 ## 目标和要求
 
@@ -163,13 +163,13 @@ class Polygon : public Shape
 
 可以按照这样的逻辑：**鼠标左键单击时**，创建一个多边形对象，**后续鼠标左键单击的时候**为多边形添加顶点，直到**鼠标右键单击**结束多边形的创建。
 
-相应地要修改 `mouse_click_event()`, `mouse_move_event()`, `mouse_release_event()` 中的中多边形相关的逻辑，此外，你可以模仿上述函数，在 Canvas 鼠标右键的逻辑 `mouse_right_click_event()`，例如：
+相应地要修改 `mouse_click_event()`, `mouse_move_event()`, `mouse_release_event()` 中的中多边形相关的逻辑，此外，你可以模仿上述函数，在 Canvas 中实现鼠标右键的逻辑 `mouse_right_click_event()`，例如：
 
 ```cpp
 void Canvas::draw()
 {
     draw_background();
-
+    // HW1_TODO: more interaction events
     if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
         mouse_click_event();
     if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
@@ -185,6 +185,9 @@ void Canvas::draw()
 <div align=center><img width = 75% src ="./figs/polygon.gif"/></div align>
 
 > **Freehand 图形的绘制事实上和多边形较为类似，实现思路是一致的。**
+
+参考示例：
+<div align=center><img width = 75% src ="./figs/freehand.gif"/></div align>
 
 ## 查看类图
 
