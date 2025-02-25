@@ -168,6 +168,9 @@ void Canvas::draw()
 
 > **Freehand 图形的绘制事实上和多边形较为类似，实现思路是一致的。**
 
+## 查看类图
+
+作业要求导出实现的各种形状的类关系图，可以参考 [Visual Studio 导出类图](https://blog.csdn.net/songhuangong123/article/details/125970557) 或 [使用 plantuml 导出类图](../../../Softwares/Clang-uml.md)。
 
 ## 补充材料和提示
 
