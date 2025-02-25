@@ -21,6 +21,7 @@
 common/
 ├── window.h        // 窗口类，OpenGL 和 ImGui 上下文初始化的封装
 ├── widget.h        // UI 组件的抽象类
+├── widget.h        // 图像类
 └── image_widget.h  // 实现图像可视化的组件类，继承自 widget 类（与 MiniDraw 无关）
 ```
 
@@ -195,9 +196,9 @@ void MiniDraw::draw()
         const auto& canvas_min = ImGui::GetCursorScreenPos();
         const auto& canvas_size = ImGui::GetContentRegionAvail();
         const auto& canvas_max = ImVec2(canvas_min.x + canvas_size.x, canvas_min.y + canvas_size.y);
-        // 绘制（填充的）矩形作为背景版
+        // 绘制（填充的）矩形作为背景版（颜色可以自行调整）
         draw_list->AddRectFilled(canvas_min, canvas_max, IM_COL32(50, 50, 50, 255));
-        // 绘制矩形边框
+        // 绘制矩形边框（颜色可以自行调整）
         draw_list->AddRect(canvas_min, canvas_max, IM_COL32(255, 255, 255, 255));
     }
     ImGui::End();
@@ -437,7 +438,7 @@ std::vector<std::shared_ptr<Line>> line_list_;
 std::vector<std::shared_ptr<Rect>> rect_list_;
 ```
 
-然而这是好做法吗？
+**然而这是好做法吗？**
 
 ## 3. 继承与多态
 
@@ -560,4 +561,4 @@ if (draw_status_)
 }
 ```
 
-这一部分 Canvas 功能可以从整体的 draw 函数中独立出来，单独封装到一个类当中，Canvas 功能的最终实现请参考 [canvas_widget.h](../../../Framework2D/include/common/canvas_widget.h)。
+这一部分 Canvas 功能可以从整体的 draw 函数中独立出来，单独封装到一个类当中，Canvas 功能的最终实现请参考 [canvas_widget.h](../../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.h)。

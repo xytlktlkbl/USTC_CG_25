@@ -35,6 +35,7 @@ class Canvas : public Widget
     void set_default();
     void set_line();
     void set_rect();
+    // HW1_TODO: more shape types.
 
     // Clears all shapes from the canvas.
     void clear_shape_list();

@@ -54,6 +54,8 @@ void Canvas::set_rect()
     shape_type_ = kRect;
 }
 
+// HW1_TODO: more shape types, implements
+
 void Canvas::clear_shape_list()
 {
     shape_list_.clear();
@@ -121,7 +123,7 @@ void Canvas::mouse_click_event()
                     start_point_.x, start_point_.y, end_point_.x, end_point_.y);
                 break;
             }
-            
+            // HW1_TODO: case USTC_CG::Canvas::kEllipse:
             default: break;
         }
     }

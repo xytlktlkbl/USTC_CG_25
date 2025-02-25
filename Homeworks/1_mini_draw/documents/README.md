@@ -3,7 +3,7 @@
 ## 学习过程
 
 - 大致阅读 [GUI 简介](./supplement/gui_introduction.md)，不完全懂也没关系，不用担心！
-- 根据 [配置说明](./supplement/framework_introduction.md) 配置作业项目代码，把 Demo 程序跑通。
+- 根据 [配置说明](../../../Framework2D/README.md) 配置作业项目代码，把 Demo 程序跑通。
 - 简单了解 [绘图基本功能的实现](./supplement/framework_details.md) ，一步一步完成画**直线**和**矩形**的 MiniDraw 程序，学习如何添加按钮、处理鼠标交互等。**（这一步的结果已经在框架中给出，目的主要是帮助了解框架的使用，你也可以运行 `1_MiniDraw.exe` 尝试，直接进入下一步完成 MiniDraw 功能的扩充。）**
 - 模仿上述过程，添加更多图形的绘制，如 `Ellipse`，`Polygon`，`Freehand`（自由绘制模式，optional）等。我们在程序中提供了若干处 `HW1_TODO` 的提示，根据下面的提示补充相应的功能，就可以完成这次作业。
 
@@ -11,22 +11,57 @@
 
 - 在 [Canvas 类](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.h) 和 [Shapes 文件夹](../../../Framework2D/src/assignments/1_MiniDraw/shapes/) 中添加绘制新图形 `Ellipse`, `Polygon`, `Freehand` 的功能；
 - 在 [MiniDraw 窗口类](../../../Framework2D/src/assignments/1_MiniDraw/minidraw_window.h) 中添加相应的交互按钮；
-- 学习类的**继承**和**多态**。
+- 学习类的**继承**和**多态**；
+- 选做：实现画图工具的各种拓展功能。
   
-## 说明
+## 0. 配置框架
 
-- 请确保已经按照 [框架配置说明](./supplement/framework_introduction.md) 配置成功框架代码，这个时候应该可以运行成功 `1_MiniDraw` 项目，已经实现了 `Line` 和 `Rectangle` 的绘制；
+- 请确保已经按照 [框架配置说明](../../../Framework2D/README.md) 配置成功框架代码，这个时候应该可以运行成功 `1_MiniDraw` 项目，已经实现了 `Line` 和 `Rectangle` 的绘制；
 - 善用 VS Code 的全局搜索功能，快捷键 `Ctrl+Shift+F`，例如你可以使用这个功能全局搜索 `HW1_TODO` 的提示，帮助快速定位到关键部分。
 - **符合项目要求的结构设计、实现方法有很多，你不一定要严格按照下面的提示来实现，如果你有更好的想法，请务必实现它，并且在报告文件中详细描述。**
+
+如果配置成功了，运行作业项目，可以出现如下的界面：
+  
+<div align=center><img width = 75% src ="./figs/step0.jpg"/></div align>
 
 
 ## 1. 添加椭圆绘制功能
 
 ### Step 1：在主窗口中添加一个 `Ellipse` 按钮交互
 
-在 [minidraw_window.cpp](../../../Framework2D/src/assignments/1_MiniDraw/minidraw_window.cpp) 的 `draw_canvas()` 中添加一个按钮，实现椭圆图形类型的切换，可以仿照前面直线段和矩形的按钮设计。
+[minidraw_window.cpp](../../../Framework2D/src/assignments/1_MiniDraw/minidraw_window.cpp) 的 `draw_canvas()` 函数负责窗口中各种内容的绘制，在这里可以添加一个按钮，实现椭圆图形类型的切换。可以仿照前面直线段和矩形的按钮实现。
 
-单击这个按钮的时候， `p_canvas` 需要执行 `set_ellipse()` 操作切换自己的图形类型。你需要先在 [canvas_widget.h](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.h) 为 `Canvas` 类添加一个 `set_ellipse()` 方法，并在 [canvas_widget.cpp](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.cpp) 中实现它，可以参考`set_line()`、`set_rect()`的实现。这样就可以正确切换图形类型了。
+```cpp
+// Buttons for shape types
+// 绘制直线段的按钮
+if (ImGui::Button("Line"))
+{
+    std::cout << "Set shape to Line" << std::endl;
+    p_canvas_->set_line();
+}
+// 绘制矩形的按钮
+ImGui::SameLine();
+if (ImGui::Button("Rect"))
+{
+    std::cout << "Set shape to Rect" << std::endl;
+    p_canvas_->set_rect();
+}
+// HW1_TODO: More primitives
+//    - Ellipse
+//    - Polygon
+//    - Freehand(optional)
+```
+
+单击这个按钮的时候， `p_canvas` 需要执行 `set_ellipse()` 操作切换自己的图形类型。所以，你需要先在 [canvas_widget.h](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.h) 为 `Canvas` 类添加一个 `set_ellipse()` 方法，
+```cpp
+// Shape type setters.
+void set_default();
+void set_line();
+void set_rect();
+// HW1_TODO: more shape types.
+```
+并在 [canvas_widget.cpp](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.cpp) 中实现它，可以参考`set_line()`、`set_rect()`的实现。
+这样就可以正确切换图形类型了。
 
 不过这个时候我们还没有实现椭圆对应的数据结构和绘制方法，因此画不出椭圆。
 
@@ -34,7 +69,7 @@
 
 在 [shapes/](../../../Framework2D/src/assignments/1_MiniDraw/shapes/) 文件夹下新建一个 `ellipse.h` 文件 和 `ellipse.cpp` 文件。他们将用来实现椭圆类 `Ellipse`。为了让项目读取到文件结构的更新，可以在 VS Code 中重新执行一次 CMake 配置。
 
-椭圆类的实现请参考同文件夹下直线类 `Line`、`Rect` 类，你需要为椭圆定义一个数据存储的结构，一个构造方法，并实现一个椭圆的绘制函数 `draw()`，这里 ImGui 为我们提供了一个现有的方法用以绘制椭圆：
+椭圆类的实现请参考同文件夹下[直线类](../../../Framework2D/src/assignments/1_MiniDraw/shapes/line.h) `Line`、[矩形类](../../../Framework2D/src/assignments/1_MiniDraw/shapes/rect.h) `Rect` ，你需要为椭圆定义一个数据存储的结构 `Class Ellipse`，一个构造方法，并实现一个椭圆的绘制函数 `draw()`，这里 ImGui 为我们提供了一个现有的方法用以绘制椭圆：
 
 ```cpp
 void AddEllipse(const ImVec2& center, float radius_x, float radius_y, ImU32 col, float rot = 0.0f, int num_segments = 0, float thickness = 1.0f);
@@ -42,14 +77,43 @@ void AddEllipse(const ImVec2& center, float radius_x, float radius_y, ImU32 col,
 
 为了实现椭圆形状的动态更新，可以仿照 `Line` 和 `Rect` 类写一个 `update(float x, float y)` 函数，它用传入的二维鼠标位置更新椭圆内存储的数据。
 
-> **思考：`Class Ellipse` 是如何体现类的继承的。**
+> **思考：`Class Ellipse` 是如何体现类的封装和继承的。**
 
-### Step 3: 在 `comp_canvas.cpp` 中实现鼠标绘制椭圆
+### Step 3: 在 `canvas_widget.cpp` 中实现鼠标绘制椭圆
 
-现在我们已经实现了椭圆类，并且为 `Canvas` 添加了椭圆类型的绘制状态，下一步将在椭圆状态 `shape_type_ == kEllipse` 下实现鼠标绘制椭圆。实现了 `comp_canvas.cpp` 中的一处鼠标事件的 `HW1_TODO` 后，可以做到效果： “鼠标单击开始绘制椭圆，移动鼠标自动更新椭圆，再次单击鼠标结束绘制”。
-
-- 在 `comp_canvas.cpp` 中包含椭圆头文件 `ellipse.h`；
+现在我们已经实现了椭圆类，并且为 `Canvas` 添加了椭圆类型的绘制状态，下一步将在椭圆状态 `shape_type_ == kEllipse` 下实现鼠标绘制椭圆。实现了 [canvas_widget.cpp](../../../Framework2D/src/assignments/1_MiniDraw/canvas_widget.cpp) 中鼠标点击事件的 `HW1_TODO` 后，可以做到效果： “鼠标单击开始绘制椭圆，移动鼠标自动更新椭圆，再次单击鼠标结束绘制”：
+- 在 `canvas_widget.cpp` 中包含椭圆头文件 `ellipse.h`；
 - 在函数 `mouse_click_event()` 中用构造方法创建一个椭圆，让 `current_shape_` 指向它；
+```cpp
+if (!draw_status_) // 点击鼠标开启绘制状态
+{
+    draw_status_ = true;
+    start_point_ = end_point_ = mouse_pos_in_canvas();
+    switch (shape_type_) // 根据当前绘制类型为 current_shape_ 构造不同的绘制对象
+    {
+        case USTC_CG::Canvas::kDefault:
+        {
+            break;
+        }
+        // 构造直线段对象
+        case USTC_CG::Canvas::kLine:
+        {
+            current_shape_ = std::make_shared<Line>(
+                start_point_.x, start_point_.y, end_point_.x, end_point_.y);
+            break;
+        }
+        // 构造矩形对象
+        case USTC_CG::Canvas::kRect:
+        {
+            current_shape_ = std::make_shared<Rect>(
+                start_point_.x, start_point_.y, end_point_.x, end_point_.y);
+            break;
+        }
+        // HW1_TODO: case USTC_CG::Canvas::kEllipse:
+        default: break;
+    }
+}
+```
 
 剩下的操作都是已经完成了的，不需要额外补充：
 - 函数 `mouse_move_event()` 中调用 `update` 函数动态更新 `current_shape_`；
@@ -69,7 +133,9 @@ void AddEllipse(const ImVec2& center, float radius_x, float radius_y, ImU32 col,
 
 > **思考：多边形的数据应该如何存储？**
 
-对于多边形，实现 `update(float x, float y)` 函数可以用于为其添加顶点，绘制函数 `draw()` 可以将其分解为多段直线绘制。
+对于多边形，实现 `update(float x, float y)` 函数可以用于为其添加顶点，绘制函数 `draw()` 可以将其**分解为多段直线绘制**。
+
+> **在 ImGui 中也提供了多边形的绘制函数，但是它做不到在绘制的过程中保持开放，绘制结束时连接首位两点的效果**
 
 ### Step 3: 在 `comp_canvas.cpp` 中实现鼠标绘制多边形
 
