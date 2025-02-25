@@ -137,6 +137,24 @@ if (!draw_status_) // 点击鼠标开启绘制状态
 
 > **思考：多边形的数据应该如何存储？**
 
+一个 Polygon 类的示例：
+```cpp
+class Polygon : public Shape
+{
+   public:
+    Polygon();
+    Polygon(std::vector<float> x_list, std::vector<float> y_list);
+    virtual ~Polygon() = default;
+
+    void draw(const Config& config) const;
+    void update(float x, float y);
+    void add_control_point(float x, float y);
+
+   private:
+    std::vector<float> x_list_, y_list_;
+};
+```
+
 对于多边形，重载 `add_control_point(float x, float y)` 函数可以用于为其添加顶点，实现 `update(float x, float y)`以传递鼠标移动时的更新，绘制函数 `draw()` 可以将其**分解为多段直线绘制**。
 
 > **在 ImGui 中也提供了多边形的绘制函数，但是它做不到在绘制的过程中保持开放，绘制结束时连接首位两点的效果**
