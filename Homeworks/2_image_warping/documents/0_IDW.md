@@ -46,11 +46,13 @@ $$\sum_{i=1}^n w_i = 1, \text{and } \ w_i \geq 0, \text{ for } i = 1, 2, \cdots,
   >
   > 即求解如下的线性方程组
   >
-  > $$ \boldsymbol{T}_i \boldsymbol{A} = \boldsymbol{B},$$
+  > $$\boldsymbol{T}_i \boldsymbol{A} = \boldsymbol{B},$$
   >
   > 其中
   >
-  > $$\boldsymbol{A} = \sum _ {j=1, j\neq i}^n \sigma_i(\boldsymbol{p}_j)(\boldsymbol{p}_j-\boldsymbol{p}_i)\cdot (\boldsymbol{p}_j-\boldsymbol{p}_i)^\top,\\\boldsymbol{B} = \sum _ {j=1, j\neq i}^n \sigma_i(\boldsymbol{p}_j)(\boldsymbol{q}_j-\boldsymbol{q}_i)\cdot (\boldsymbol{p}_j-\boldsymbol{p}_i)^\top.$$
+  > $$\boldsymbol{A} = \sum _ {j=1, j\neq i}^n \sigma_i(\boldsymbol{p}_j)(\boldsymbol{p}_j-\boldsymbol{p}_i) \cdot (\boldsymbol{p}_j-\boldsymbol{p}_i)^\top,$$
+  >
+  >$$\boldsymbol{B} = \sum _ {j=1, j\neq i}^n \sigma_i(\boldsymbol{p}_j)(\boldsymbol{q}_j-\boldsymbol{q}_i)\cdot (\boldsymbol{p}_j-\boldsymbol{p}_i)^\top.$$
 
 
 确定 $f_i$ 和 $w_i$ 之后，就得到了插值映射 $f$.
@@ -58,9 +60,9 @@ $$\sum_{i=1}^n w_i = 1, \text{and } \ w_i \geq 0, \text{ for } i = 1, 2, \cdots,
 ## 注
 可以尝试其他形式的 $\sigma$，例如
 
-$$\sigma_i = \left[\dfrac{(R_i - \Vert\boldsymbol{p} - \boldsymbol{p}_i\Vert)_{+}}{R_i\Vert\boldsymbol{p} - \boldsymbol{p}_i\Vert}\right]^\mu$$
+$$\sigma_i = \left[\dfrac{(R_i - \Vert\boldsymbol{p} - \boldsymbol{p} _ i\Vert)_{+}}{R_i\Vert\boldsymbol{p} - \boldsymbol{p}_i\Vert}\right]^\mu$$
 
-其中 $R_i$ 是某一个适当大小的正常数，$(\cdot) _ {+}$ 表示对大于 0 部分的截断，该式将插值点 $\boldsymbol{p}_i$ 的影响控制在了一个范围内。
+其中 $R_i$ 是某一个适当大小的正常数，$( \cdot ) _ { + }$ 表示对大于 0 部分的截断，该式将插值点 $\boldsymbol{p}_i$ 的影响控制在了一个范围内。
 
 
 ## 参考文献
