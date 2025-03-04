@@ -33,7 +33,7 @@ $$f(\boldsymbol{p} _ j)=\sum _ {i=1}^n\boldsymbol{\alpha} _ i g_i(\Vert\boldsymb
 提供了 $2n$ 个约束。有以下的求解方法：
 
 - 直接取 $\boldsymbol{A} = \boldsymbol{I}, \boldsymbol{b} = \boldsymbol{0}$ 是恒同映射，剩下的 $2n$ 个变量通过求解方程组确定；
-- 如果提供了一个点，可以选取 $\boldsymbol{A}(\boldsymbol{p})$ 为平移变换，$\boldsymbol{A}=\boldsymbol{I}$, $\boldsymbol{b}=\boldsymbol{q}_1-\boldsymbol{p}_1$；
+- 如果提供了一个点，可以选取 $\boldsymbol{A}(\boldsymbol{p})$ 为平移变换，$\boldsymbol{ A } = \boldsymbol{ I }$, $\boldsymbol{b}=\boldsymbol{q}_1-\boldsymbol{p}_1$；
 - 如果提供了两个点，可以选取 $\boldsymbol{A}(\boldsymbol{p})$ 为平移+缩放；
 - 一般地，如果提供了至少三个点，可以通过求解最小二乘问题确定仿射变换
   
@@ -41,11 +41,9 @@ $$f(\boldsymbol{p} _ j)=\sum _ {i=1}^n\boldsymbol{\alpha} _ i g_i(\Vert\boldsymb
 
 - 也可以补充约束求解所有 $2(n+3)$ 个变量
   
-  $$
-  \begin{pmatrix}
+  $$\begin{pmatrix}
   \boldsymbol{p} _ 1 & \cdots &\boldsymbol{p} _ n \newline 1 & \cdots &1 \end{pmatrix} _ {3\times n}\begin{pmatrix}\boldsymbol{\alpha} _ 1^\top\newline\vdots\newline\boldsymbol{\alpha} _ n^\top
-  \end{pmatrix} _ {n\times 2} = \boldsymbol{0} _ {3\times 2}.
-  $$
+  \end{pmatrix} _ {n\times 2} = \boldsymbol{0} _ {3\times 2}.$$
 
 ## 参考文献
 
