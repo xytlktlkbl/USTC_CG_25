@@ -62,7 +62,7 @@ $$\sum_{i=1}^n w_i = 1, \text{and } \ w_i \geq 0, \text{ for } i = 1, 2, \cdots,
 
 $$\sigma_i = \left[\dfrac{(R_i - \Vert\boldsymbol{p} - \boldsymbol{p} _ i\Vert)_{+}}{R_i\Vert\boldsymbol{p} - \boldsymbol{p}_i\Vert}\right]^\mu$$
 
-其中 $R_i$ 是某一个适当大小的正常数，$(.) _ { + }$ 表示对大于 0 部分的截断，该式将插值点 $\boldsymbol{p}_i$ 的影响控制在了一个范围内。
+其中 $R_i$ 是某一个适当大小的正常数，该式将插值点 $\boldsymbol{p}_i$ 的影响控制在了一个范围内。
 
 
 ## 参考文献
