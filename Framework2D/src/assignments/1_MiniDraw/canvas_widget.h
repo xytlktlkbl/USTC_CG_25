@@ -29,6 +29,7 @@ class Canvas : public Widget
         kRect = 2,
         kEllipse = 3,
         kPolygon = 4,
+        kFreehand = 5,
     };
 
     // Shape type setters.
@@ -36,9 +37,14 @@ class Canvas : public Widget
     void set_line();
     void set_rect();
     // HW1_TODO: more shape types.
-
+    void set_ellipse();
+    void set_polygon();
+    void set_freehand();
     // Clears all shapes from the canvas.
     void clear_shape_list();
+
+    // delete the last shape
+    void delete_shape();
 
     // Set canvas attributes (position and size).
     void set_attributes(const ImVec2& min, const ImVec2& size);
@@ -53,6 +59,7 @@ class Canvas : public Widget
 
     // Event handlers for mouse interactions.
     void mouse_click_event();
+    void mouse_right_click_event();
     void mouse_move_event();
     void mouse_release_event();
 
@@ -76,6 +83,7 @@ class Canvas : public Widget
     // Current shape being drawn.
     ShapeType shape_type_;
     ImVec2 start_point_, end_point_;
+    std::vector<float> x_list_, y_list_;
     std::shared_ptr<Shape> current_shape_;
 
     // List of shapes drawn on the canvas.

@@ -6,6 +6,11 @@
 #include "imgui.h"
 #include "shapes/line.h"
 #include "shapes/rect.h"
+#include "shapes/ellipse.h"
+#include "shapes/polygon.h"
+#include "shapes/freehand.h"
+
+//#include "shapes/freehand.h"
 
 namespace USTC_CG
 {
@@ -13,12 +18,32 @@ void Canvas::draw()
 {
     draw_background();
     // HW1_TODO: more interaction events
-    if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-        mouse_click_event();
-    mouse_move_event();
-    if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
-        mouse_release_event();
+    switch (shape_type_)
+    {
+    case kLine:
+    case kRect:
+    case kEllipse:
+        if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            mouse_click_event();
+        mouse_move_event();
+        break;
 
+    case kPolygon:
+        if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            mouse_click_event();
+        if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+            mouse_right_click_event(); 
+        mouse_move_event();
+            break;
+    case kFreehand: 
+        if (is_hovered_ && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            mouse_click_event();
+        if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
+            mouse_release_event();
+        mouse_move_event();
+    default:
+        break;
+    }
     draw_shapes();
 }
 
@@ -55,10 +80,56 @@ void Canvas::set_rect()
 }
 
 // HW1_TODO: more shape types, implements
+void Canvas::set_ellipse()
+{
+    draw_status_ = false;
+    shape_type_ = kEllipse;
+}
+
+void Canvas::set_polygon()
+{
+    draw_status_ = false;
+    shape_type_ = kPolygon;
+}
+
+void Canvas::set_freehand()
+{
+    draw_status_ = false;
+    shape_type_ = kFreehand;
+}
 
 void Canvas::clear_shape_list()
 {
+    if(draw_status_){
+        draw_status_ = false;
+        if(current_shape_)
+        {
+            current_shape_->close_polygon();
+            shape_list_.push_back(current_shape_);
+            current_shape_.reset();
+            x_list_.clear();
+            y_list_.clear();
+        }
+    }
     shape_list_.clear();
+}
+
+void Canvas::delete_shape()
+{
+    if(draw_status_){
+        draw_status_ = false;
+        if(current_shape_)
+        {
+            current_shape_->close_polygon();
+            shape_list_.push_back(current_shape_);
+            current_shape_.reset();
+            x_list_.clear();
+            y_list_.clear();
+        }
+    }
+    if(shape_list_.size())
+        shape_list_.pop_back();
+
 }
 
 void Canvas::draw_background()
@@ -124,11 +195,41 @@ void Canvas::mouse_click_event()
                 break;
             }
             // HW1_TODO: case USTC_CG::Canvas::kEllipse:
+            case USTC_CG::Canvas::kEllipse:
+            {
+                current_shape_ = std::make_shared<Ellipse>(
+                    start_point_.x, start_point_.y, end_point_.x, end_point_.y);
+                break;
+            }
+            case USTC_CG::Canvas::kPolygon:
+            {
+                x_list_.push_back(start_point_.x);
+                x_list_.push_back(end_point_.x);
+                y_list_.push_back(start_point_.y);
+                y_list_.push_back(end_point_.y);
+                current_shape_ = std::make_shared<Polygon>(x_list_, y_list_);
+                
+                break;
+            }
+            case USTC_CG::Canvas::kFreehand:
+            {
+                x_list_.push_back(start_point_.x);
+                x_list_.push_back(end_point_.x);
+                y_list_.push_back(start_point_.y);
+                y_list_.push_back(end_point_.y);
+                current_shape_ = std::make_shared<Freehand>(x_list_, y_list_);
+                break;
+            }
             default: break;
         }
     }
     else
     {
+        if(shape_type_ == kPolygon){
+            ImVec2 pos_next = mouse_pos_in_canvas();
+            current_shape_->add_control_point(pos_next.x, pos_next.y);
+            return;
+        }
         draw_status_ = false;
         if (current_shape_)
         {
@@ -138,15 +239,43 @@ void Canvas::mouse_click_event()
     }
 }
 
-void Canvas::mouse_move_event()
+void Canvas::mouse_right_click_event()
+{
+    if(shape_type_ != kPolygon || !draw_status_){
+        return;
+    }
+    else{
+        draw_status_ = false;
+        if(current_shape_)
+        {
+            current_shape_->close_polygon();
+            shape_list_.push_back(current_shape_);
+            current_shape_.reset();
+            x_list_.clear();
+            y_list_.clear();
+        }
+    }
+}
+
+
+
+void Canvas::   mouse_move_event()
 {
     // HW1_TODO: Drawing rule for more primitives
     if (draw_status_)
     {
-        end_point_ = mouse_pos_in_canvas();
-        if (current_shape_)
-        {
-            current_shape_->update(end_point_.x, end_point_.y);
+        if(shape_type_ == kLine || shape_type_ == kRect || shape_type_ == kEllipse || shape_type_ == kPolygon){   
+            end_point_ = mouse_pos_in_canvas();
+            if (current_shape_){
+                current_shape_->update(end_point_.x, end_point_.y);
+            }
+        }
+
+        else if(shape_type_ == kFreehand){
+            if(ImGui::IsMouseDragging(ImGuiMouseButton_Left)){
+                end_point_ = mouse_pos_in_canvas();
+                current_shape_->add_control_point(end_point_.x, end_point_.y);
+            }
         }
     }
 }
@@ -154,6 +283,14 @@ void Canvas::mouse_move_event()
 void Canvas::mouse_release_event()
 {
     // HW1_TODO: Drawing rule for more primitives
+    draw_status_ = false;
+        if(current_shape_)
+        {
+            shape_list_.push_back(current_shape_);
+            current_shape_.reset();
+            x_list_.clear();
+            y_list_.clear();
+        }
 }
 
 ImVec2 Canvas::mouse_pos_in_canvas() const
