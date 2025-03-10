@@ -1,20 +1,21 @@
 # 3. 图像融合 Poisson Image Editing
 
 > 作业步骤：
-> - 查看[文档](documents/README.md)，内含多个小教程，请先阅读 [documents/README.md](documents/README.md)，其中包含了所有文档的阅读引导
+> - 阅读[文档](documents/README.md)，内含多个小教程
 > - 在[项目目录](../../Framework2D/)中编写作业代码
 > - 按照[作业规范](../README.md)提交作业
 
 ## 作业递交
 
 - 递交内容：程序代码及实验报告 
-- 递交时间：2024年3月17日（周日）晚
+- 递交时间：2025年3月16日（周日）晚
 
 ## 要求
 
 - 实现 Poisson Image Editing 算法（矩形边界）
-  - 至少须实现文中的 Seamless cloning 的应用
+  - 至少须实现文中的 Seamless cloning 的 Importing gradients 部分
 - 实时拖动区域显示结果
+- 梯度融合 Mixing gradients 部分（Optional）
 - 复杂边界实现（多边形光栅化的[扫描线转换算法](documents/ScanningLine.md)）（Optional）
 
 ## 目的
