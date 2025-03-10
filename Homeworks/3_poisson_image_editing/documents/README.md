@@ -3,7 +3,7 @@
 ## 学习过程
 
 - 你需要使用到 [Eigen](../../2_image_warping/documents/eigen_example/) 库，如何配置这个库可以参考上一个作业的说明文档；
-- 主要修改 [target_image_widget.cpp](../../../Framework2D/src/assignments/3_PoissonImageEditing/target_image_widget.h) 中的 `clone()` 函数，实现 Poisson 图像融合的算法。我们已经提供了源图像 (Source Image) 矩形区域的选取功能，以及将该区域简单 `paste` 到目标图像 (Target Image) 中的实现示例。我们在待实现位置处标明了 `HW3_TODO`。本文档接下来的教程将辅助同学们阅读论文 [Poisson Image Editing [SIGGRAPH 2003]](https://www.cs.jhu.edu/~misha/Fall07/Papers/Perez03.pdf)，以及实现图像无缝融合的算法。
+- 主要修改 [target_image_widget.cpp](../../../Framework2D/src/assignments/3_PoissonImageEditing/target_image_widget.h) 中的 `clone()` 函数，实现 Poisson 图像融合的算法。我们已经提供了源图像 (Source Image) 矩形区域的选取功能，以及将该区域简单 `paste` 到目标图像 (Target Image) 中的实现示例。我们在待实现位置处标明了 `HW3_TODO`。本文档接下来的教程将辅助同学们阅读论文 [Poisson Image Editing [SIGGRAPH 2003]](https://www.cs.jhu.edu/~misha/Fall07/Papers/Perez03.pdf) [^03Perez]，以及实现图像无缝融合的算法。
 
 ## 提示
 
@@ -54,11 +54,11 @@ void set_pixel(int x, int y, const std::vector<unsigned char>& values);
 
 ## 1. 图像融合的问题建模（论文 Section.2 的 Guided Interpolation）
 
-图像融合算法（把图像看作 $\mathbb{R}^2 \rightarrow \mathbb{R}^3$ 的映射）求解的是这样一个问题：
+图像融合算法 [^03Perez]（把图像看作 $\mathbb{R}^2 \rightarrow \mathbb{R}^3$ 的映射）求解的是这样一个问题：
 
 **Input:** 背景/目标图像 $f^*$，源图像 $g$，背景图像中的待修改区域 $\Omega$；
   
-**Output:** 新图像 $f$，**插值**图像 $f^*$ 在 $\Omega$ 以外的部分，满足 $f|_{\partial \Omega} = f^*|_{\partial \Omega}$.
+**Output:** 新图像 $f$，**插值**图像 $f^ *$ 在 $\Omega$ 以外的部分，满足 $f|_{\partial \Omega} = f ^ *|_{\partial \Omega}$.
 
 <div align=center><img width = 60% src ="figs/paper_notation.jpg"/></div align>
 
