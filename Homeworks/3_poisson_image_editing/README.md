@@ -16,7 +16,7 @@
   - 至少须实现文中的 Seamless cloning 的 Importing gradients 部分
 - 实时拖动区域显示结果
 - 梯度融合 Mixing gradients 部分（Optional）
-- 复杂边界实现（多边形光栅化的[扫描线转换算法](documents/ScanningLine.md)）（Optional）
+- 复杂边界实现（多边形光栅化的扫描线转换算法）（Optional）
 
 ## 目的
 
