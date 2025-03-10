@@ -1,4 +1,8 @@
 #include "warping_widget.h"
+#include "warper/warper.h"
+#include "warper/IDW_warper.h"
+#include "warper/RBF_warper.h"
+#include "warper/Dlib_warper.h"
 
 #include <cmath>
 #include <iostream>
@@ -158,16 +162,121 @@ void WarpingWidget::warping()
         {
             // HW2_TODO: Implement the IDW warping
             // use selected points start_points_, end_points_ to construct the map
-            std::cout << "IDW not implemented." << std::endl;
+            int result_x, result_y, size = data_->get_pixel(0, 0).size();
+            IDWWarper idw(data_->width(), data_->height());
+            for(int i = 0; i < start_points_.size(); i++){
+                idw.add_point(start_points_[i].x, start_points_[i].y, end_points_[i].x, end_points_[i].y);
+            }
+            for (int y = 0; y < data_->height(); ++y){
+                for(int x = 0; x < data_->width(); ++x){
+                    idw.current_point.start_x = x, idw.current_point.start_y = y;
+                    idw.warp();
+                    result_x = idw.current_point.end_x, result_y = idw.current_point.end_y;
+                    if(result_x >= 0 &&result_x < data_->width() && result_y >= 0 
+                        && result_y < data_->height()){
+                            std::vector<unsigned char> pixel = data_->get_pixel(x, y);
+                            warped_image.set_pixel(result_x, result_y, pixel);
+                            idw.add_result(result_x, result_y);
+                        }
+                }
+            }
+            for (int y = 0; y < data_->height(); ++y){
+                for(int x = 0; x < data_->width(); ++x){
+                    if(!(*idw.flag)[x][y]){
+                        std::vector<unsigned char> pixel(size);
+                        idw.fill_blank(x,y);
+                        float* v = new float[2];
+                        for(int i = 0; i < idw.neibour_number; i++){
+                            idw.index.get_item(idw.closed_item[i], v);
+                            for(int j = 0; j < size; j++){
+                                pixel[j] += data_->get_pixel(v[0], v[1])[j] / idw.neibour_number;
+                            }
+                        }
+                        warped_image.set_pixel(x, y, pixel);
+                    }
+                }
+            }
             break;
         }
         case kRBF:
         {
             // HW2_TODO: Implement the RBF warping
             // use selected points start_points_, end_points_ to construct the map
-            std::cout << "RBF not implemented." << std::endl;
+            int result_x, result_y, size = data_->get_pixel(0, 0).size();
+            RBFWarper rbf(data_->width(), data_->height());
+            for(int i = 0; i < start_points_.size(); i++){
+                rbf.add_point(start_points_[i].x, start_points_[i].y, end_points_[i].x, end_points_[i].y);
+            }
+            for (int y = 0; y < data_->height(); ++y){
+                for(int x = 0; x < data_->width(); ++x){
+                    rbf.current_point.start_x = x, rbf.current_point.start_y = y;
+                    rbf.warp();
+                    result_x = rbf.current_point.end_x, result_y = rbf.current_point.end_y;
+                    if(result_x >= 0 &&result_x < data_->width() && result_y >= 0 
+                        && result_y < data_->height()){
+                            std::vector<unsigned char> pixel = data_->get_pixel(x, y);
+                            warped_image.set_pixel(result_x, result_y, pixel);
+                            rbf.add_result(result_x, result_y);
+                        }
+            }
+            }
+            for (int y = 0; y < data_->height(); ++y){
+                for(int x = 0; x < data_->width(); ++x){
+                    if(!(*rbf.flag)[x][y]){
+                        std::vector<unsigned char> pixel(size);
+                        rbf.fill_blank(x,y);
+                        float* v = new float[2];
+                        for(int i = 0; i < rbf.neibour_number; i++){
+                            rbf.index.get_item(rbf.closed_item[i], v);
+                            for(int j = 0; j < size; j++){
+                                pixel[j] += data_->get_pixel(v[0], v[1])[j] / rbf.neibour_number;
+                            }
+                        }
+                        warped_image.set_pixel(x, y, pixel);
+                    }
+                }
+            }
             break;
         }
+        case kDlib:
+        {
+            int result_x, result_y, size = data_->get_pixel(0, 0).size();
+            DlibWarper dlib(data_->width(), data_->height());
+            for(int i = 0; i < start_points_.size(); i++){
+                dlib.add_point(start_points_[i].x, start_points_[i].y, end_points_[i].x, end_points_[i].y);
+            }
+            for (int y = 0; y < data_->height(); ++y){
+                for(int x = 0; x < data_->width(); ++x){
+                    dlib.current_point.start_x = x, dlib.current_point.start_y = y;
+                    dlib.warp();
+                    result_x = dlib.current_point.end_x, result_y = dlib.current_point.end_y;
+                    if(result_x >= 0 &&result_x < data_->width() && result_y >= 0 
+                        && result_y < data_->height()){
+                            std::vector<unsigned char> pixel = data_->get_pixel(x, y);
+                            warped_image.set_pixel(result_x, result_y, pixel);
+                            dlib.add_result(result_x, result_y);
+                        }
+            }
+        }
+        for (int y = 0; y < data_->height(); ++y){
+            for(int x = 0; x < data_->width(); ++x){
+                if(!(*dlib.flag)[x][y]){
+                    std::vector<unsigned char> pixel(size);
+                    dlib.fill_blank(x,y);
+                    float* v = new float[2];
+                    for(int i = 0; i < dlib.neibour_number; i++){
+                        dlib.index.get_item(dlib.closed_item[i], v);
+                        for(int j = 0; j < size; j++){
+                            pixel[j] += data_->get_pixel(v[0], v[1])[j] / dlib.neibour_number;
+                        }
+                    }
+                    warped_image.set_pixel(x, y, pixel);
+                }
+            }
+        }
+            break;
+        }
+        
         default: break;
     }
 
@@ -194,6 +303,10 @@ void WarpingWidget::set_IDW()
 void WarpingWidget::set_RBF()
 {
     warping_type_ = kRBF;
+}
+void WarpingWidget::set_Dlib()
+{
+    warping_type_ = kDlib;
 }
 void WarpingWidget::enable_selecting(bool flag)
 {

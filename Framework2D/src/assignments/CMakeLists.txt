@@ -1,3 +1,2 @@
 add_subdirectory(1_MiniDraw)
 add_subdirectory(2_ImageWarping)
-add_subdirectory(my_GUI)
