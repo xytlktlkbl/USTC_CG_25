@@ -171,7 +171,7 @@ class SeamlessClone
 ### 2.3 稀疏方程的构造
 论文中的 Equation.(7) 提供了要求解的线性方程组，我们用 Eigen 库来处理它。方程组可以写成 $\boldsymbol{A}\boldsymbol{r} = \boldsymbol{B}$ 的格式。假设求解的区域 $\Omega$（内部）是一个 $W \times H$ 的矩形，其 $W \times H$ 个像素的颜色就是待求解的变量。不妨只考虑 r 通道，我们将它们“拉长”为一个 $W\times H$ 维向量 $\boldsymbol{r}$。对于矩形，它的边界检查很容易，我们可以根据 Equation.(7) 填写系数矩阵 $\boldsymbol{A}$ 和 $\boldsymbol{B}$ 的元素。
 
-例如，对于编号为 `y*W+x` 的 $(x, y)$ 像素，我们可以列出第 `y*W+x` 个方程：
+例如，对于编号为 `y*W+x` 的 $(x, y)$ 像素，我们可以列出第 `y*W+x` 个方程：（$g$ 表示源图像，实际取值的时候需要转换一下坐标）
 
 - 如果它是一般的内部点：
   ```
