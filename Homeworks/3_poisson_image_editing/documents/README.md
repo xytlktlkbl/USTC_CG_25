@@ -256,9 +256,15 @@ Eigen 库中，稀疏求解器（例如 `SparseLU`）中的函数 `compute()` �
 >[!Note]
 > 也请确保最终结果是在 Release 模式下运行，Debug 模式下运行也会对计算效率产生较大影响！
 
+实时效果可以参考（你可以添加自己喜欢的交互方式）
+
+<div align=center><img width = 60% src ="figs/rt.gif"/></div align>
+
 至此，矩形区域的图像融合、实时编辑就完成了（下图的 Seamless Cloning 的结果）。
 
 <div align=center><img width = 95% src ="figs/rst_example.jpg"/></div align>
+
+
 
 ## 3. 实现混合梯度（Optional）
 我们前面取向量场 $\boldsymbol{v}$ 为源图像的梯度信息。如果换成论文中 Equation.(12) 的形式，就是混合梯度方法。和前面实现的方法唯一的不同就是右边系数 $\boldsymbol{B}$ 有所不同。可以自行尝试（见上图的 Mixing Gradients 的结果）。
