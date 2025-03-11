@@ -58,7 +58,7 @@ void set_pixel(int x, int y, const std::vector<unsigned char>& values);
 
 **Input:** 背景/目标图像 $f^*$，源图像 $g$，背景图像中的待修改区域 $\Omega$；
   
-**Output:** 新图像 $f$，**插值**图像 $f^ *$ 在 $\Omega$ 以外的部分，满足 $f|_{\partial \Omega} = f ^ *|_{\partial \Omega}$.
+**Output:** 新图像 $f$，**插值**图像 $f^ *$ 在 $\Omega$ 以外的部分，满足 $f| _ {\partial \Omega} = f ^ *| _ {\partial \Omega}$.
 
 <div align=center><img width = 60% src ="figs/paper_notation.jpg"/></div align>
 
@@ -67,10 +67,14 @@ void set_pixel(int x, int y, const std::vector<unsigned char>& values);
 - `Paste` 功能直接把 $g$ 在 $\Omega$ 的值替换过来，但显然这样不算“无缝融合”；
 - 论文中的 Equation.(3) 给出了另一种方式，用一个向量场 $\boldsymbol{v}$ 来引导区域内部颜色的变化，如果取这个向量场为源图像的梯度场 $\nabla g$，就可以做到插值出来的区域具有源图像的选中区域的细节。
 
+<div align=center><img width = 50% src ="figs/seamless_cloning.jpg"/></div align>
+
  Equation.(3) 是一个变分问题，可以转化为求解区域 $\Omega$ 上 Dirichlet 边界条件的 Poisson 方程（Equation.(4)）。
 
 >[!NOTE]
 > 我们**只需要关心上述 Poisson 方程离散化的的数值求解方法**（Equation.(7)）（以及取 $\boldsymbol{v} = \nabla g$ 时的 Equation.(11)），这是一个有关 $\Omega$ 内部区域所有像素点值的**大型稀疏线性方程组**（其实是三个，因为每个像素点有三个通道 RGB）。
+>
+> <div align=center><img width = 50% src ="figs/discrete_poisson.jpg"/></div align>
 
 ## 2. 算法的代码实现
 
@@ -165,7 +169,7 @@ class SeamlessClone
 然后，直接在 [3_PoissonImageEditing/](../../../Framework2D/src/assignments/3_PoissonImageEditing/) 下为它添加 `seamless_clone.h` 和相应的实现 `seamless_clone.cpp`。
 
 ### 2.3 稀疏方程的构造
-论文中的 Equation.(7) 为我们提供了要求解的线性方程组，我们用 Eigen 库来处理它。方程组可以写成 $\boldsymbol{A}\boldsymbol{r} = \boldsymbol{B}$ 的格式。假设求解的区域 $\Omega$（内部）是一个 $W \times H$ 的矩形，其 $W \times H$ 个像素的颜色就是待求解的变量。不妨只考虑 r 通道，我们将它们“拉长”为一个 $W\times H$ 维向量 $\boldsymbol{r}$。对于矩形，它的边界检查很容易，我们可以根据 Equation.(7) 填写系数矩阵 $\boldsymbol{A}$ 和 $\boldsymbol{B}$ 的元素。
+论文中的 Equation.(7) 提供了要求解的线性方程组，我们用 Eigen 库来处理它。方程组可以写成 $\boldsymbol{A}\boldsymbol{r} = \boldsymbol{B}$ 的格式。假设求解的区域 $\Omega$（内部）是一个 $W \times H$ 的矩形，其 $W \times H$ 个像素的颜色就是待求解的变量。不妨只考虑 r 通道，我们将它们“拉长”为一个 $W\times H$ 维向量 $\boldsymbol{r}$。对于矩形，它的边界检查很容易，我们可以根据 Equation.(7) 填写系数矩阵 $\boldsymbol{A}$ 和 $\boldsymbol{B}$ 的元素。
 
 例如，对于编号为 `y*W+x` 的 $(x, y)$ 像素，我们可以列出第 `y*W+x` 个方程：
 
@@ -211,6 +215,14 @@ A.setFromTriplets(triplet_list.begin(), triplet_list.end());
 
 >[!Note]
 > **注意**：实现中，有许多边界条件需要处理！
+
+>[!Tip]
+> 有同学敲完代码之后运行发现不对劲，~~天都塌了~~，包括但不限于：编译报错，运行崩溃，结果抽象。但其实这些情况是正常现象，建议：
+> - 检查输出，明确出错位置和原因，矩阵维数和向量维数不匹配这些问题都有可能出现；
+> - 不要直接上大图像测试，小图像、纯色图像（梯度为 0）等等例子也是很有帮助的；
+> - 多调试多输出，比如看看小区域上的矩阵列的对不对，检查矩阵的对称性等等；
+> - 单独排查每一个部分，比如分别检查矩阵和右侧向量的正确性；
+> - ~~想到了再补充~~
 
 ### 2.4 稀疏方程组的求解
 构造好 `A` 和 `B` 后，调用 Eigen 的稀疏方程组求解器即可。然而，选择哪一种求解器亦有讲究，Eigen 中提供 LU 分解、QR 分解、LLT/LDLT 分解，共轭梯度法 ConjugateGradient 等等多种求解器，各有不同的适用场景。
@@ -271,6 +283,8 @@ Eigen 库中，稀疏求解器（例如 `SparseLU`）中的函数 `compute()` �
 
 ### 4.2 不规则 Poisson 方程的构造和求解
 获取了复杂区域的像素之后，第二个任务就是根据这个区域列出离散的 Poisson 方程（Equation. (7)），从而求出所有的内部点对应的像素值。这一步需要注意边界点的检测和处理。
+
+边界点的像素值是已知的，但是也可以当作未知数放在方程中求解，只需要把系数矩阵在这一行的对角元设置为 1，其他位置设置为 0，右边取这个边界点的像素值即可。也就是 **把边界点和内部点联合起来列一个方程**。
 
 
 ## 测试图片
