@@ -312,6 +312,14 @@ Eigen 库中，稀疏求解器（例如 `SparseLU`）中的函数 `compute()` �
 - 如何查找文献（[百度网盘](http://pan.baidu.com/s/1o6z56T8)）
 - [数学在计算机图形学中的应用](http://staff.ustc.edu.cn/~lgliu/Resources/CG/Math_for_CG_Turk_CN.htm) 
 
+
+
+## 自由边界的特殊处理方法
+在贴图的时候，可能存在**贴图范围超出了背景图像**的矩形框。这个时候贴图和背景的交集**存在部分边界没有固定像素值**。
+下面给出一种解决方法。该方法仅作为演示如何求解混合边值问题，具体实现上效率不高（需要根据相交区域重新计算矩阵）。大家可以尝试去探寻**更高效**的做法。此处仅作为抛砖引玉😋。
+更严谨的推导详见各大FEM教材
+<div align=center><img width = 70% src ="figs/mixing.jpg"/></div align>
+
 ## 参考文献
 
 [^03Perez]: Pérez P, Gangnet M, Blake A. [**Poisson image editing**](https://www.cs.jhu.edu/~misha/Fall07/Papers/Perez03.pdf), ACM Transactions on Graphics (Proc. SIGGRAPH), 22(3): 313-318, 2003. 
