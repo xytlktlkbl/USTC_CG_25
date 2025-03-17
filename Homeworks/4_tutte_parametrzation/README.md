@@ -1,9 +1,10 @@
 # 4. 曲面参数化 Tutte Parameterzation
 
 ## 作业步骤：
- - 查看[文档](documents/README.md)，内含多个小教程，请先阅读 [documents/README.md](documents/README.md)，其中包含了所有文档的阅读引导
- - 在[项目目录](https://github.com/USTC-CG-NEXT/Framework3D/tree/419eb8ccc75532ced3713402f733493eaa5a94fb)中编写作业代码
- - 按照[作业规范](../README.md)提交作业
+> 作业步骤：
+> - 阅读[文档](documents/README.md)，内含多个小教程
+> - 在[项目目录](../../Framework3D/)中编写作业代码
+> - 按照[作业规范](../README.md)提交作业
 
 ## 作业递交
 
@@ -38,39 +39,49 @@
 
 本次作业的要求说明和一些辅助资料
 
-### (2) 作业项目 `Framework3D` [->](https://github.com/USTC-CG-NEXT/Framework3D/tree/419eb8ccc75532ced3713402f733493eaa5a94fb) 
+### (2) 作业项目 `Framework3D` [->](../../Framework3D/) 
 
 作业的基础代码框架
 
 ## 提交文件格式
 
-文件命名为 `ID_姓名_homework*.rar/zip`，其中包含：
+<!-- 请确保按照如下顺序完成作业（**务必仔细**阅读图文操作流程 [F3D_kickstart.pdf](../../Framework3D/F3D%20kickstart.pdf)）：
 
-```
-ID_姓名_homework*/
-├── data/                         // 测试模型和纹理
-│   ├── xxx.usda
-│   ├── yyy.usda
-│   ├── zzz.png
-│   └── ...  
-├── utils/                        // 辅助代码文件
-│   ├── some_algorithm.h
-│   ├── some_algorithm.cpp
-│   └── ...  
-├── nodes/                        // 你实现or修改的节点文件
-│   ├── node_your_implementation.cpp
-│   ├── node_your_other_implementation.cpp
-│   └── ...  
-├── stage.usdc                    // 节点连接信息
-├── report.pdf                    // 实验报告
-├── CMakeLists.txt                // 其他补充文件
-└── ...                           
+- 首先，在 [submission/](../../Framework3D/submissions/) 文件夹下**复制**一份 [assignments/](../../Framework3D/submissions/assignments/) 文件夹，并改名为 `lisi_homework/`（依你的姓名而定）；
+- 确保**在上一步操作完成之后**，再实现和连接你的节点图。这样，你自己实现的所有节点在框架界面中都应该**自动**包含了你的名称前缀（这对我们很重要！）。例如李四同学实现的所有节点都应该自动包含如下的 `lisi_` 前缀：
+- <div align=center><img width = 60% src ="../../Softwares/images/node_name_example.png"/></div align> -->
+完成作业之后，打包三样内容即可：
+  - 你的 `xxx_homework/`文件夹（拷贝并改名自 [assignments/](../../Framework3D/submissions/assignments/)，不要包含中文，详见 [F3D_kickstart.pdf](../../Framework3D/F3D%20kickstart.pdf)）
+  - 节点连接信息（stage.usdc，来自框架目录下的 `Assets/` 文件夹，请一并拷贝到上边的 `xxx_homework/`文件夹里）；
+  - 报告（命名为 `id_name_report4.pdf`）
+  
+  具体请务必严格按照如下的格式提交：
 
-```
+  ```
+  ID_姓名_homework*/                // 你提交的压缩包
+  ├── xxx_homework/                  
+  │  ├── stage.usdc                    // （额外添加）本次作业的节点连接信息
+  │  ├── data/                         // 测试模型和纹理
+  │  │   ├── xxx.usda
+  │  │   ├── yyy.usda
+  │  │   ├── zzz.png
+  │  │   └── ...  
+  │  ├── utils/                        // 辅助代码文件
+  │  │   ├── some_algorithm.h
+  │  │   ├── some_algorithm.cpp
+  │  │   └── ...  
+  │  └── nodes/                        // 本次作业你实现or修改的节点文件
+  │      ├── node_your_implementation.cpp
+  │      ├── node_your_other_implementation.cpp
+  │      └── ...  
+  ├── id_name_report4.pdf                    // 实验报告
+  ├── CMakeLists.txt                // CMakeLists.txt 文件不要删除
+  └── ...                           // 其他补充文件
+  ```
 
 ### 注意事项
 
-- 导入数据（网格和纹理）时使用相对路径，将你的数据放在可执行文件目录下，直接通过 `FilePath = 'xxx.usda'` 或者 `FilePath = 'zzz.png'` 访问；
+- 导入数据（网格和纹理）时使用**相对路径**，例如，将你的数据放在可执行文件目录下，直接通过 `FilePath = 'xxx.usda'` 或者 `FilePath = 'zzz.png'` 访问，或者定位到作业目录的 `data/` 文件夹中；
 - 在 `node_your_implementation.cpp` 等文件中使用
   ```cpp
   #include "utils/some_algorithm.h"
