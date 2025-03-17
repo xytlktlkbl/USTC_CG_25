@@ -66,13 +66,6 @@ void PoissonWindow::draw_toolbar()
 
         ImGui::Separator();
 
-        static bool selectable = false;
-        ImGui::Checkbox("Select", &selectable);
-        add_tooltips(
-            "On: Enable region selection in the source image. Drag left mouse "
-            "to select rectangle (default) in the source.");
-        if (p_source_)
-            p_source_->enable_selecting(selectable);
         static bool realtime = false;
         ImGui::Checkbox("Realtime", &realtime);
         add_tooltips(
@@ -81,6 +74,13 @@ void PoissonWindow::draw_toolbar()
             "mouse.");
         if (p_target_)
             p_target_->set_realtime(realtime);
+
+        static bool mix = false;
+        ImGui::Checkbox("mix gradient", &mix);
+        add_tooltips(
+                "On: Enable mix gradient ");
+            if (p_target_)
+                p_target_->set_mix_gradient(mix);
 
         ImGui::Separator();
 
@@ -96,6 +96,19 @@ void PoissonWindow::draw_toolbar()
         if (ImGui::MenuItem("Seamless Clone") && p_target_ && p_source_)
         {
             p_target_->set_seamless();
+        }
+
+        if (ImGui::MenuItem("Precalculate") && p_target_ && p_source_)
+        {
+            p_target_->set_precalculate();
+        }
+
+        if (ImGui::MenuItem("select") && p_target_ && p_source_){
+            p_source_->enable_selecting(true);
+        }
+
+        if (ImGui::MenuItem("freehand") && p_target_ && p_source_){
+            p_source_->enable_freehand_selecting(true);
         }
 
         ImGui::EndMainMenuBar();

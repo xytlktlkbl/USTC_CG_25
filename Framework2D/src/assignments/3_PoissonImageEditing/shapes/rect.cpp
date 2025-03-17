@@ -29,7 +29,7 @@ void Rect::update(float x, float y)
     end_point_y_ = y;
 }
 
-std::vector<std::pair<int, int>> Rect::get_interior_pixels() const
+std::vector<std::pair<int, int>> Rect::get_interior_pixels()
 {
     int start_pixel_x = static_cast<int>(start_point_x_);
     int start_pixel_y = static_cast<int>(start_point_y_);

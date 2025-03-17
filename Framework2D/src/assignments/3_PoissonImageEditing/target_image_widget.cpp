@@ -1,5 +1,6 @@
 #include "target_image_widget.h"
 #include "Seamless_clone.h"
+#include "Real_time_clone.h"
 
 #include <cmath>
 
@@ -53,6 +54,11 @@ void TargetImageWidget::set_realtime(bool flag)
     flag_realtime_updating = flag;
 }
 
+void TargetImageWidget::set_mix_gradient(bool flag)
+{
+    flag_mix_gradient = flag;
+}
+
 void TargetImageWidget::restore()
 {
     *data_ = *back_up_;
@@ -67,6 +73,20 @@ void TargetImageWidget::set_paste()
 void TargetImageWidget::set_seamless()
 {
     clone_type_ = kSeamless;
+}
+
+void TargetImageWidget::set_precalculate()
+{
+    std::shared_ptr<Image> mask = source_image_->get_region_mask();
+    if (data_ == nullptr || source_image_ == nullptr ||
+        source_image_->get_region_mask() == nullptr|| !flag_realtime_updating)
+        return;
+    
+    if(r.is_initial == false){
+        r.set(source_image_->get_data(), data_, mask, 
+            mouse_position_.x, mouse_position_.y, 
+            source_image_->get_position().x, source_image_->get_position().y);
+        }
 }
 
 void TargetImageWidget::clone()
@@ -124,10 +144,27 @@ void TargetImageWidget::clone()
             // each pixel in the selected region, calculate the final RGB color
             // by solving Poisson Equations.
             restore();
-            USTC_CG::SeamlessClone s(source_image_->get_data(), data_, mask, source_image_->get_position().x, 
-            source_image_->get_position().y, mouse_position_.x, mouse_position_.y, 
-            source_image_->get_position().x, source_image_->get_position().y);
-            s.solve();
+            if(!flag_realtime_updating){
+                USTC_CG::SeamlessClone s(source_image_->get_data(), data_, mask, 
+                mouse_position_.x, mouse_position_.y, 
+                source_image_->get_position().x, source_image_->get_position().y);
+                if(!flag_mix_gradient)
+                    s.solve();
+                else
+                    s.solve_mix_gradient();
+            }
+            else{
+                if(r.is_initial == false || source_image_->flag_select_change){
+                    r.set(source_image_->get_data(), data_, mask, 
+                    mouse_position_.x, mouse_position_.y, 
+                    source_image_->get_position().x, source_image_->get_position().y);
+                    source_image_->flag_select_change = false;
+                }
+                if(!flag_mix_gradient)
+                    r.solve(mouse_position_.x, mouse_position_.y);
+                else
+                    r.solve_mix_gradient(mouse_position_.x, mouse_position_.y);
+            }
 
             break;
         }

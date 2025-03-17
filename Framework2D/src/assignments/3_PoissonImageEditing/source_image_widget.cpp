@@ -22,13 +22,22 @@ void SourceImageWidget::draw()
     // Draw the image
     ImageWidget::draw();
     // Draw selected region
-    if (flag_enable_selecting_region_)
+    if (flag_enable_selecting_region_ || flag_enable_freehand_selecting_region_)
         select_region();
 }
 
 void SourceImageWidget::enable_selecting(bool flag)
 {
     flag_enable_selecting_region_ = flag;
+    flag_enable_freehand_selecting_region_ = !flag;
+    region_type_ = kRect;
+}
+
+void SourceImageWidget::enable_freehand_selecting(bool flag)
+{
+    flag_enable_freehand_selecting_region_ = flag;
+    flag_enable_selecting_region_ = !flag;
+    region_type_ = kFreehand;
 }
 
 void SourceImageWidget::select_region()
@@ -98,6 +107,15 @@ void SourceImageWidget::mouse_click_event()
                     std::make_unique<Rect>(start_.x, start_.y, end_.x, end_.y);
                 break;
             }
+            case USTC_CG::SourceImageWidget::kFreehand:
+            {
+                x_list_.push_back(start_.x);
+                x_list_.push_back(end_.x);
+                y_list_.push_back(start_.y);
+                y_list_.push_back(end_.y);
+                selected_shape_  = std::make_unique<Freehand>(x_list_, y_list_);
+                break;
+            }
             default: break;
         }
     }
@@ -109,8 +127,14 @@ void SourceImageWidget::mouse_move_event()
     if (draw_status_)
     {
         end_ = mouse_pos_in_canvas();
-        if (selected_shape_)
+        if (selected_shape_ && region_type_ == kRect)
             selected_shape_->update(end_.x, end_.y);
+        else if(selected_shape_&& region_type_ == kFreehand){
+            if(ImGui::IsMouseDragging(ImGuiMouseButton_Left)){
+                end_point_ = mouse_pos_in_canvas();
+                selected_shape_->add_control_point(end_.x, end_.y);
+            }
+        }
     }
 }
 
@@ -156,5 +180,6 @@ void SourceImageWidget::update_selected_region()
         int y = pixel.second;
         selected_region_mask_->set_pixel(x, y, { 255 });
     }
+    flag_select_change = true;
 }
 }  // namespace USTC_CG

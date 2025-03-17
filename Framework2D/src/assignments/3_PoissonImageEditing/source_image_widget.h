@@ -2,6 +2,7 @@
 
 #include "common/image_widget.h"
 #include "shapes/rect.h"
+#include "shapes/freehand.h"
 
 namespace USTC_CG
 {
@@ -12,7 +13,8 @@ class SourceImageWidget : public ImageWidget
     enum RegionType
     {
         kDefault = 0,
-        kRect = 1
+        kRect = 1,
+        kFreehand = 2,
     };
 
     explicit SourceImageWidget(
@@ -24,6 +26,7 @@ class SourceImageWidget : public ImageWidget
 
     // Region selecting interaction
     void enable_selecting(bool flag);
+    void enable_freehand_selecting(bool flag);
     void select_region();
     // Get the selected region in the source image, this would be a binary mask.
     // The **size** of the mask should be the same as the source image.
@@ -35,6 +38,7 @@ class SourceImageWidget : public ImageWidget
     // Get the position to locate the region in the target image.
     // We return the start point of the selected region as default.
     ImVec2 get_position() const;
+    bool flag_select_change = false;
 
    private:
     // Event handlers for mouse interactions.
@@ -52,7 +56,7 @@ class SourceImageWidget : public ImageWidget
     // The shape we draw in the source image to select the region.
     // By default, we use a rectangle to select the region.
     // HW3_TODO(optional): You can add more shapes for region selection.
-    std::unique_ptr<Rect> selected_shape_;
+    std::unique_ptr<Shape> selected_shape_;
     // The selected region in the source image, this would be a binary mask.
     // The **size** of the mask should be the same as the source image.
     // The **value** of the mask should be 0 or 255: 0 for the background and
@@ -60,8 +64,11 @@ class SourceImageWidget : public ImageWidget
     std::shared_ptr<Image> selected_region_mask_;
 
     ImVec2 start_, end_;
+    ImVec2 start_point_, end_point_;
+    std::vector<float> x_list_, y_list_;
     bool flag_enable_selecting_region_ = false;
     bool draw_status_ = false;
+    bool flag_enable_freehand_selecting_region_ = false;
 };
 
 }  // namespace USTC_CG

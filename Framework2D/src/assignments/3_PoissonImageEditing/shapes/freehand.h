@@ -1,7 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include "shape.h"
 #include <vector>
+#include <map>
+
 namespace USTC_CG
 {
 class Freehand : public Shape
@@ -19,6 +21,7 @@ class Freehand : public Shape
 
     // Overrides draw function to implement line-specific drawing logic
     void draw(const Config& config) const override;
+    std::vector<std::pair<int, int>> get_interior_pixels() override;
 
     // Overrides Shape's update function to adjust the end point during
     // interaction
@@ -34,12 +37,13 @@ class Freehand : public Shape
    private:
     std::vector<float> x_list_, y_list_;
     bool is_closed = false;
-
-    class Edge{
-        public:
+    struct Edge{
         int y_max;
         float x_min;
         float dx;
     };
+    std::map<int, std::vector<Edge>> ET; // 边表 (y_min为键)
+    int min_y, max_y;            // 多边形y范围
+    void build_ET_table();
 };
 }  // namespace USTC_CG

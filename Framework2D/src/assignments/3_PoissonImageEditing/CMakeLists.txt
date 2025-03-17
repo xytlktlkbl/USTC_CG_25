@@ -5,6 +5,7 @@ file(GLOB source
   "${CMAKE_CURRENT_SOURCE_DIR}/shapes/*.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/shapes/*.h" 
 )
+set(CMAKE_BUILD_TYPE Release)
 add_executable(${PROJECT_NAME} ${source})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 set_target_properties(${PROJECT_NAME} PROPERTIES 
