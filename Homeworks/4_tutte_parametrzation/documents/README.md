@@ -33,47 +33,8 @@
 - 求解稀疏方程组
 - 更新顶点坐标
 
-### 参考公式
-#### 顶点的微分坐标
+思考：高亏格曲面？
 
-$$ \boldsymbol\delta _ i = \boldsymbol{v _ i} - \sum _ {j \in N(i)} w _ j  \boldsymbol{v _ j},$$
-
-其中 $N(i)$ 表示顶点 $i$ 的 1-邻域.
-
-#### 极小曲面计算
-
-固定边界点坐标，取均匀权重下的 $\boldsymbol{\delta} _ i = \boldsymbol{0}$ 即
-
-$$ \frac{1}{d _ i} \sum _ {j\in N(i)} (\boldsymbol{v} _ i - \boldsymbol{v} _ j) = \boldsymbol{0}, \quad \text{for all interior } i .$$
-
-
-### 参考的节点连接图（不同人写的输入输出不一定相同，这里仅供参考）
-<div align=center><img width = 80% src ="figs/mesh-9.png"/></div align>
-
-> [!tip]
-> 提示
-> ```cpp
-> halfedge_handle.is_boundary()；
-> ```
-> 可以判断是否是边界，加上遍历很容易判断出哪些点是落在边界上的。
-> 
-> 固定边界取决于你设置的边界，你可以通过.idx()来找到点的索引，再通过点的索引来找到点的位置，进而设置点的坐标。
-
-## 2. 修改边界条件得到平面参数化
-
-### 2.1 边界映射
-完成 [边界映射节点](../../../submissions/assignments/nodes/node_boundary_mapping.cpp)，把网格**边界映射到平面凸区域的边界**（正方形、圆形）。可以可视化检查结果的正确性。
-### 2.2 参数化求解
-在上述边界条件下求解同样的 Laplace 方程，可以得到（均匀权重的）**Tutte 参数化**。（连接以上两个节点！）
-### 参考的节点连接图
-<div align=center><img width = 80% src ="figs/mesh-8.png"/></div align>
-
-## 3. 尝试比较不同的权重
-计算不同权重下的 **Tutte 参数化**，例如
-  - （要求实现）Cotangent weights 
-  - （可选）shape-preserving weights （[Floater weights](https://www.cs.jhu.edu/~misha/Fall09/Floater97.pdf)）。
-
-### 参考公式
 #### Tutte 参数化计算
 
 分布边界点的坐标到平面凸区域的边界，求解同样的方程组：
