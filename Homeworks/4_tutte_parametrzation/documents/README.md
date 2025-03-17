@@ -22,7 +22,7 @@
 
 ## 参考公式
 
-参考论文和[作业要求](https://rec.ustc.edu.cn/share/1c0d1d10-db2e-11ef-b910-f95ea2c8844c)实现 Tutte 曲面参数化算法。你可以在[指定目录](../../../Framework3D/source/Editor/geometry_nodes/)下为算法添加节点实现，在框架中测试算法的正确性以及不同变量选取对实验结果的影响。可按照如下思路完成本次作业：
+参考论文和[作业要求](https://rec.ustc.edu.cn/share/1c0d1d10-db2e-11ef-b910-f95ea2c8844c)实现 Tutte 曲面参数化算法。你可以在[指定目录](../../../Framework3D/submissions/assignments/nodes)下为算法添加节点实现，在框架中测试算法的正确性以及不同变量选取对实验结果的影响。可按照如下思路完成本次作业：
   - 实现网格上（均匀权重） **Laplace方程的建立和求解**，边界条件仍然选取为原来的空间点位置，可以求解得到固定边界下的"**极小曲面**"，完成 [极小曲面节点](../../../submissions/assignments/nodes/node_min_surf.cpp)；
   - 在同样系数下，修改边界条件，将网格**边界映射到平面凸区域的边界**（正方形、圆形），完成 [边界映射节点](../../../submissions/assignments/nodes/node_boundary_mapping.cpp)；
   - 求解得到（均匀权重的）**Tutte 参数化** （连接以上两个节点！）
