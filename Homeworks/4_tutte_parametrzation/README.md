@@ -84,7 +84,8 @@
 - 导入数据（网格和纹理）时使用**相对路径**，例如，将你的数据放在可执行文件目录下，直接通过 `FilePath = 'xxx.usda'` 或者 `FilePath = 'zzz.png'` 访问，或者定位到作业目录的 `data/` 文件夹中；
 - 在 `node_your_implementation.cpp` 等文件中使用
   ```cpp
-  #include "utils/some_algorithm.h"
+  #include "some_algorithm.h"
   ```
-  包含你的辅助代码；
+  包含你的辅助代码；其中some_algorithm.h & some_algorithm.cpp直接放在utils中。
 - 如果除了添加 `utils/` 和 `node_your_implementation.cpp`，你还**对框架有其他修改**，就**打包上传所有代码**。
+- **尽量不要动框架的东西！！！！**
