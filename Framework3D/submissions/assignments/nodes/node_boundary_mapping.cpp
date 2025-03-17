@@ -60,7 +60,7 @@ NODE_EXECUTION_FUNCTION(circle_boundary_mapping)
     ** processing, offering convenient operations for traversing and modifying
     ** mesh elements.
     */
-
+    auto halfedge_mesh = operand_to_openmesh(&input);
 
     /* ----------- [HW4_TODO] TASK 2.1: Boundary Mapping (to circle)
     *------------
@@ -101,7 +101,7 @@ NODE_EXECUTION_FUNCTION(circle_boundary_mapping)
     auto geometry = openmesh_to_operand(halfedge_mesh.get());
 
     // Set the output of the nodes
-    params.set_output("Output", std::move(output));
+    params.set_output("Output", std::move(*geometry));
 	return true;
 }
 
