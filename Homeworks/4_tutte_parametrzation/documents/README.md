@@ -9,8 +9,8 @@
   - 学习如何通过半边结构**遍历**顶点、面、边以及访问他们的**邻域**等；
 - **模仿**网格处理的示例，参考相关公式补充 [node_min_surf.cpp](../../../Framework3D/submissions/assignments/nodes/node_min_surf.cpp)，[node_boundary_mapping.cpp](../../../Framework3D/submissions/assignments/nodes/node_boundary_mapping.cpp) 等文件，连接节点图，实现简单的极小曲面和参数化效果。
   
-  >[!Note]
-  > 根据选取的权重不同，Tutte 参数化有不同的结果，**推荐**设计并封装相关的功能在 [utils/](../../../Framework3D/submissions/assignments/utils/) 文件夹下，供节点函数调用）
+> [!Note]
+> 根据选取的权重不同，Tutte 参数化有不同的结果，**推荐**设计并封装相关的功能在 [utils/](../../../Framework3D/submissions/assignments/utils/) 文件夹下，供节点函数调用）
 
 ## 测试网格
 
@@ -25,7 +25,7 @@
 
 ## 1. 固定边界求解极小曲面
 
-完成极小曲面节点 [node_min_surf.cpp](../../../Framework3D/submissions/assignments/nodes/node_min_surf.cpp) ，实现网格上（均匀权重）的 **Laplace方程的建立和求解**，边界条件仍然选取为原来的空间点位置，就可以求解得到固定边界下的"**极小曲面**"。
+完成 [极小曲面节点](../../../Framework3D/submissions/assignments/nodes/node_min_surf.cpp) ，实现网格上（均匀权重）的 **Laplace方程的建立和求解**，边界条件仍然选取为原来的空间点位置，就可以求解得到固定边界下的"**极小曲面**"。
 
 主要步骤：
 - 检测边界
