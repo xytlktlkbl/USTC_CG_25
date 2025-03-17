@@ -35,7 +35,7 @@
 
 ## 3. 参考示例
 
-我们在项目中提供了一个 [半边结构的操作示例](../../../Framework3D/source/Editor/geometry_nodes/node_curvature.cpp)，可以参考其中的操作学习 OpenMesh 的基本使用方法。
+我们在项目中提供了一个 [半边结构的操作示例](https://github.com/USTC-CG-NEXT/Framework3D/blob/419eb8ccc75532ced3713402f733493eaa5a94fb/source/Editor/geometry_nodes/node_curvature.cpp)，可以参考其中的操作学习 OpenMesh 的基本使用方法。
 
 该节点的目标是计算三角网格每个顶点 $v$ 处的 Gauss 曲率，使用公式：
 

@@ -2,7 +2,7 @@
 
 ## 作业步骤：
  - 查看[文档](documents/README.md)，内含多个小教程，请先阅读 [documents/README.md](documents/README.md)，其中包含了所有文档的阅读引导
- - 在[项目目录](../../Framework3D/)中编写作业代码
+ - 在[项目目录](https://github.com/USTC-CG-NEXT/Framework3D/tree/419eb8ccc75532ced3713402f733493eaa5a94fb)中编写作业代码
  - 按照[作业规范](../README.md)提交作业
 
 ## 作业递交
@@ -38,13 +38,12 @@
 
 本次作业的要求说明和一些辅助资料
 
-### (2) 作业项目 `Framework3D` [->](../../Framework3D/) 
+### (2) 作业项目 `Framework3D` [->](https://github.com/USTC-CG-NEXT/Framework3D/tree/419eb8ccc75532ced3713402f733493eaa5a94fb) 
 
 作业的基础代码框架
 
 ## 提交文件格式
 
-在交作业之前请详细地看一下作业的提交方式，还是建议看一下[Step by step Ver.](../../Framework3D/F3Dkickstart.pdf)
 文件命名为 `ID_姓名_homework*.rar/zip`，其中包含：
 
 ```
