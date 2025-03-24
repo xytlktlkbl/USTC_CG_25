@@ -74,3 +74,5 @@
 #### Harmonic Parameterization
 
 <div align=center><img width = 75% src ="figs/arap-demo-2.png"/></div align>
+
+在figs文件夹内，我们还附上了ARAP-Para论文的figures可供同学们参考。

@@ -73,3 +73,7 @@ get_polyscope_vertices当你建立这个节点的时候，你就可以使用中�
 
 一个简单的效果图：（必做部分）
 <div align=center><img width = 75% src ="figs/Laplace-8.gif"/></div align>
+
+## 补充材料
+
+SGP 2004作者项目主页有个demo视频，参见[链接](https://igl.ethz.ch/projects/Laplacian-mesh-processing/Laplacian-mesh-editing/)
