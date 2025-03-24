@@ -2,7 +2,7 @@
 
 实现 SGP 2008 的 ARAP (As-rigid-as-possible) 参数化算法。
 
-<div align=center><img width = 75% src ="../documents_1/figs/arap-1.jpg"/></div align>
+<div align=center><img width = 75% src ="figs/arap-1.jpg"/></div align>
 
 ## 问题背景
 
@@ -12,13 +12,13 @@
 
 > 思考：三角形的形变量度量？
 
-<div align=center><img width = 50% src ="../documents_1/figs/arap-2.jpg"/></div align>
+<div align=center><img width = 50% src ="figs/arap-2.jpg"/></div align>
 
 ### 非线性参数化方法
 
 如果不固定边界，边界的点也有自由度进行移动，能减小三角形的形变量，从而得到更好的参数化结果。
 
-<div align=center><img width = 50% src ="../documents_1/figs/arap-3.jpg"/></div align>
+<div align=center><img width = 50% src ="figs/arap-3.jpg"/></div align>
 
 ## 学习过程
 

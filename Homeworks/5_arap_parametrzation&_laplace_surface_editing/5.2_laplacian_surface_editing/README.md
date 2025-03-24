@@ -2,7 +2,7 @@
 
 实现 SGP 2004 的 Laplace 表面编辑。
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-1.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-1.png"/></div align>
 
 ## 问题背景
 
@@ -10,7 +10,7 @@
 
 拉普拉斯算子（Laplace-Beltrami Operator, LBO）作为微分几何中的关键工具，被广泛用于曲面平滑、网格变形、形状匹配等领域912。其核心目标是通过算子的本征函数（eigenfunctions）提取形状的固有特征，实现变形不变性。
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-2.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-2.png"/></div align>
 
 ## 学习过程
 
@@ -43,11 +43,11 @@
 
 目前节点的逻辑是，每当下面节点系统改变时，整个节点系统都会跑一遍，那么就需要用一些特殊的方式来进行存储，使得某些数据不会跟着一直在跑，这里使用如下图的方式进行存储数据。
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-4.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-4.png"/></div align>
 
 首先，先定义一个要存储的类型，这里就以SolverStorage为例，定义完类型之后可以在程序里面如此使用：
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-3.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-3.png"/></div align>
 
 如此即可将内部的数据存储起来。
 
@@ -55,18 +55,18 @@
 
 必做作业中的点的交互有如下的两个节点
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-6.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-6.png"/></div align>
 
 get_polyscope_vertices当你建立这个节点的时候，你就可以使用中间点击一个点来得到一个活动标价，当然你也可以不停的中间点击多个活动标价，你可以移动活动标价来移动这个点。其输出的是所有点现在的位置（包括没有移动的点）。get_control_points是得到你所中键点的indices。得到标价后就如下图所示，你可以调节polyscope info来进行对标价大小的变化。
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-5.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-5.png"/></div align>
 
 这里需要注意的一个点是Structure Name里面填的东西是你当前网格的名称，比如你新建了一个mesh，这个mesh的名称就叫mesh_0，则内部就填/mesh_0，你可以看stage veiwer里面叫什么，也可以看你edit的界面的左上角的名字。
 
 至于Optional部分，点选测地线的时候，为了不与控制点所混淆，这里可以使用get_vertices_by_left_click这个节点，这个节点与上述节点类似，当你左键点的时候可以将这个点添加到一个list内部，然后输出你所选择的点的indices。
 
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-7.png"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-7.png"/></div align>
 
 
 一个简单的效果图：（必做部分）
-<div align=center><img width = 75% src ="../documents_2/figs/Laplace-8.gif"/></div align>
+<div align=center><img width = 75% src ="figs/Laplace-8.gif"/></div align>
