@@ -1,4 +1,4 @@
-# 5. Rasterization
+# 6. Rasterization
 
 > 作业步骤：
 > - 查看[Kickstart文档](./kickstart.pdf)，了解光栅化作业新增了哪些东西
@@ -32,7 +32,7 @@
 ### (1)说明文档 [->](./docs/README.md)
 本次作业的要求说明和一些辅助资料
 ### (2)作业框架 [->](../../Framework3D/)
-作业的基础代码框架和测试数据。数据位于[数据文件夹](../../Framework3D/submissions/assignments/data/data_hw5)
+作业的基础代码框架和测试数据。数据位于[数据文件夹](../../Framework3D/submissions/assignments/data/data_hw6)
 
 
 ## 提交文件格式
@@ -41,7 +41,7 @@
   - 你的 `xxx_homework/`文件夹（拷贝并改名自 [assignments/](../../Framework3D/submissions/assignments/)，不要包含中文，详见 [F3D_kickstart.pdf](../../Framework3D/F3D%20kickstart.pdf)）
   - 节点连接信息（stage.usdc，来自框架目录下的 `Assets/` 文件夹，请一并拷贝到上边的 `xxx_homework/`文件夹里）；
   - 渲染节点连接信息（render_nodes_save.json，来自框架目录下的 `Assets/` 文件夹，请一并拷贝到上边的 `xxx_homework/`文件夹里）
-  - 报告（命名为 `id_name_report5.pdf`）
+  - 报告（命名为 `id_name_report6.pdf`）
   
   具体请务必**严格按照**如下的格式提交：
 
@@ -50,7 +50,7 @@
   ├── xxx_homework/                  
   │  ├── stage.usdc                    // （额外添加）本次作业的节点连接信息
   │  ├── render_nodes_save.json        // （额外添加）本次作业的渲染节点连接信息
-  │  ├── data/                         // 测试模型和纹理
+  │  ├── data/                         // 你自己额外添加的测试模型和纹理
   │  │   ├── xxx.usda
   │  │   ├── yyy.usda
   │  │   ├── zzz.png
@@ -59,11 +59,14 @@
   │  │   ├── some_algorithm.h
   │  │   ├── some_algorithm.cpp
   │  │   └── ...  
+  │  ├── nodes_render/                 // 本次作业你实现or修改的节点文件
+  │  │   ├── node_xxxx.cpp
+  │  │   └── ...  
   │  └── nodes/                        // 本次作业你实现or修改的节点文件
   │      ├── node_your_implementation.cpp
   │      ├── node_your_other_implementation.cpp
   │      └── ...  
-  ├── id_name_report5.pdf                    // 实验报告
+  ├── id_name_report6.pdf                    // 实验报告
   ├── CMakeLists.txt                // CMakeLists.txt 文件不要删除
   └── ...                           // 其他补充文件
   ```
