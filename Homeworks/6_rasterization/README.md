@@ -32,7 +32,7 @@
 ### (1)说明文档 [->](./docs/README.md)
 本次作业的要求说明和一些辅助资料
 ### (2)作业框架 [->](../../Framework3D/)
-作业的基础代码框架和测试数据。数据位于[数据文件夹](../../Framework3D\submissions\assignments\data\data_hw5)
+作业的基础代码框架和测试数据。数据位于[数据文件夹](../../Framework3D/submissions/assignments/data/data_hw5)
 
 
 ## 提交文件格式
