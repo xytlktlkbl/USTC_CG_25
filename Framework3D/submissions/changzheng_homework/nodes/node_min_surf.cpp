@@ -218,6 +218,11 @@ NODE_EXECUTION_FUNCTION(min_surf_Cotangent)
                     neibour_index.push_back(v1.idx());
             }
             int size = neibour_index.size();
+            for(auto v : halfedge_mesh->vertices()){
+                for(const auto& halfedge_handle : v.outgoing_halfedges()){
+                    int face_num = halfedge_handle.face().idx();
+                }
+            }
             for(int i = 0; i < size; i++){
                 auto vex = origin_mesh->vertex_handle(vertex_handle.idx());
                 auto current = origin_mesh->vertex_handle(neibour_index[i]);
